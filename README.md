@@ -12,6 +12,7 @@ We are going to build a Movie library application
 Download initial movie data file - you will only need to use the movies.csv
 
 Create Movie Console Application
+
 	1. List all movies in the file
 		Note: Do not just scroll all movies - be smart about how to display (is there a NuGet package that could help?)
 
