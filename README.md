@@ -5,13 +5,14 @@
 This Repository will contain all the class assignments that will be building upon the Movie Library concept.
 
 There will be branches for each Assignment..
+
 A4 - Class 04 Assignment
 
-We are going to build a Movie library application
+	We are going to build a Movie library application
 
-Download initial movie data file - you will only need to use the movies.csv
+	Download initial movie data file - you will only need to use the movies.csv
 
-Create Movie Console Application
+	Create Movie Console Application
 
 	1. List all movies in the file
 		Note: Do not just scroll all movies - be smart about how to display (is there a NuGet package that could help?)
