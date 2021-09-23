@@ -40,10 +40,39 @@ namespace WJS_Movie_Library.Model
             this.Genres = genres;
         }
 
+        public Movie(string csvLine, string fieldSep = ",", string subFieldSep = "|")
+        {
+            string[] fields = csvLine.Split(fieldSep);
+            if (fields.Length > 0)
+            {
+                try 
+                { 
+                    MovieId = UInt64.Parse(fields[0]); 
+                    }
+                catch (Exception ex) 
+                { // Log Exception 
+                }
+            }
+            if (fields.Length > 1) Title = fields[1];
+            if (fields.Length > 2) this.SetGenres(fields[2], subFieldSep);
+        }
+
         public Movie(UInt64 movieId, string title, string genres)
         {
             string[] genreArr = genres.Split("|");
             Genres = new List<string>(genreArr);
+        }
+
+        public void SetGenres(string genreLine, string fieldSep = "|")
+        {
+            string [] fields = genreLine.Split(fieldSep);
+            IList<string> genres = new List<string>();
+            foreach (string genre in fields)
+            {
+                genres.Add(genre);
+            }
+
+            Genres = genres;
         }
     }
 }

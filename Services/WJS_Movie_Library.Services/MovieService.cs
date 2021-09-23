@@ -35,5 +35,12 @@ namespace WJS_Movie_Library.Services
         {
 
         }
+
+        public bool Exists(string title)
+        {
+            bool result = false;
+
+            return result;
+        }
     }
 }
