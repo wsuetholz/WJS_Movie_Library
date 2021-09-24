@@ -9,6 +9,8 @@ namespace WJS_Movie_Library.Services
 {
     public class ListMoviesService
     {
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+
         private string _pageTitle = "Movie List:\nMovie Id   Title       Genres";
         private string _pagePromptMore = "Press Enter to Continue.  Press U to Page Up or press Q to Quit";
         private string _pagePromptLast = "Press Enter to Finish.";

@@ -8,6 +8,8 @@ namespace WJS_Movie_Library.Services
 {
     public class CreateMovieService
     {
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+
         private string _pageTitle = "Enter New Movie Data";
         private string _genreTitle = "Enter a Genre for New Movie.  Press Enter on a Blank line to finish.";
         private string _movieTitle = "Movie Title: ";
@@ -32,7 +34,7 @@ namespace WJS_Movie_Library.Services
             {
                 Console.WriteLine(_movieTitle);
                 movieTitle = Console.ReadLine();
-                if (movieTitle.Length < 1)
+                if (movieTitle.Length > 0)
                 {
                     if (movieService.Exists(movieTitle))
                     {
@@ -74,6 +76,10 @@ namespace WJS_Movie_Library.Services
                 {
                     newMovieId = movieService.GetMaxMovieId() + 1;
                     movieService.AddMovie(newMovieId, movieTitle, genres);
+                }
+                else
+                {
+                    Console.WriteLine("Skipped!");
                 }
             }
 

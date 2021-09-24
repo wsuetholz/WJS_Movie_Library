@@ -8,10 +8,13 @@ namespace WJS_Movie_Library.Services
 {
     public class MainMenuService
     {
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+
         private string _mainTitle = "My Movie Library";
         private string _mainCommandOptions = "Please Select Command (A)dd, (L)ist, (S)ave, (Q)uit";
+        private string _savePrompt = "Movie Data Has Changed\n\nDo you really want to quit?  (Y)es or (N)o:";
 
-        public enum MainMenuCommandOptions { Add, List, Save, Quit };
+        public enum MainMenuCommandOptions { Unset, Add, List, Save, Quit };
 
         public MainMenuService()
         {
@@ -55,6 +58,34 @@ namespace WJS_Movie_Library.Services
                     {
                         ret = MainMenuCommandOptions.Quit;
                         commandSet = true;
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public bool PromptOkToCloseWithoutSave()
+        {
+            bool ret = false;
+            bool answered = false;
+
+            while (!answered)
+            {
+                Console.WriteLine(_savePrompt);
+                string resp = Console.ReadLine();
+                if (resp.Length > 0)
+                {
+                    string respCh = resp.Substring(0, 1).ToUpper();
+                    if (respCh.Equals("Y"))
+                    {
+                        answered = true;
+                        ret = true;
+                    }
+                    else if (respCh.Equals("N"))
+                    {
+                        answered = true;
+                        ret = false;
                     }
                 }
             }
