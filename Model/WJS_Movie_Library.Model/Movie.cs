@@ -9,7 +9,21 @@ namespace WJS_Movie_Library.Model
         public UInt64 MovieId { get; set; }
         public string Title { get; set; }
 
-        public IList<string> Genres { get; set; }
+        private IList<string> _genres = new List<string>();
+        public IList<string> Genres 
+        {
+            get { return _genres; }
+            set {
+                if (value.Count == 1 && value[0].Contains("|"))
+                {
+                    _genres = this.SetGenres(value[0]);
+                }
+                else
+                {
+                    _genres = value;
+                }
+            }
+        }
 
         public static string HeaderLine() 
         {
@@ -33,6 +47,11 @@ namespace WJS_Movie_Library.Model
             return retStr;
         }
 
+        public Movie()
+        {
+
+        }
+
         public Movie(UInt64 movieId, string title, IList<string>genres)
         {
             this.MovieId = movieId;
@@ -54,7 +73,7 @@ namespace WJS_Movie_Library.Model
                 }
             }
             if (fields.Length > 1) Title = fields[1];
-            if (fields.Length > 2) this.SetGenres(fields[2], subFieldSep);
+            if (fields.Length > 2) Genres = this.SetGenres(fields[2], subFieldSep);
         }
 
         public Movie(UInt64 movieId, string title, string genres)
@@ -63,7 +82,7 @@ namespace WJS_Movie_Library.Model
             Genres = new List<string>(genreArr);
         }
 
-        public void SetGenres(string genreLine, string fieldSep = "|")
+        public IList<string> SetGenres(string genreLine, string fieldSep = "|")
         {
             string [] fields = genreLine.Split(fieldSep);
             IList<string> genres = new List<string>();
@@ -72,7 +91,7 @@ namespace WJS_Movie_Library.Model
                 genres.Add(genre);
             }
 
-            Genres = genres;
+            return genres;
         }
     }
 }
