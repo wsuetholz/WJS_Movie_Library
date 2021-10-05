@@ -27,3 +27,44 @@ A4 - Class 04 Assignment
 		Consider creation of additional classes/methods
 		Unit test (at least one test)
 
+
+A6 - Class 06 Assignment
+
+	Modify your Movie application - add support for different Movie Types
+
+	Movie
+		int id (1)
+		string title (Toy Story)
+		string[] genres (Action, Horror)
+
+	Show 
+		int id (1)
+		string title (Supernatural)
+		int season (2)
+		int episode (12)
+		string[] writers (Kripke)
+
+	Video
+		int id (1)
+		string title (Lethal Weapon 3)
+		string format (VHS, DVD, BluRay)
+		int length (100)
+		int[] regions (0,2)
+
+	You DO NOT need to use the entire movies.csv (use maybe 10 entries)
+
+	Create shows.csv and videos.csv using the format above
+
+	These should be added through the use of abstract classes as demonstrated in class.  
+
+	Add an abstract Display() method to each class that will output the content appropriately.
+
+	1. Ask the user which Media type to display
+
+	* example: Media media = new Show();
+
+	2. Display the specific contents of the file
+
+	* example: media.Display();
+
+	 
