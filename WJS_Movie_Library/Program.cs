@@ -8,52 +8,88 @@ namespace WJS_Movie_Library
 {
     class Program
     {
-        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger(); 
 
         static void Main(string[] args)
         {
-            String fName = "../../../../Data/movies.csv";
+            String movieFName = "../../../../Data/movies.csv";
+            String showFName = "../../../../Data/shows.csv";
+            String videoFName = "../../../../Data/videos.csv";
+
+            string mediaType = "";
             bool firstTime = true;
 
-            log.Info($"Startup using data file {fName}.");
+            log.Info($"Startup using data file {movieFName}.");
 
-            MovieService movieService = new MovieService(fName);
-            MainMenuService mainMenuService = new MainMenuService();
-            MainMenuService.MainMenuCommandOptions cmdOpt;
-            ListMoviesService listMovies = new ListMoviesService(20);
-            CreateMovieService createMovie = new CreateMovieService();
+            CsvMediaService<Movie> movieService = new CsvMediaService<Movie>(movieFName);
+            CsvMediaService<Show> showService = new CsvMediaService<Show>(showFName);
+            CsvMediaService<Video> videoService = new CsvMediaService<Video>(videoFName);
+            MenuService menuService = new MenuService();
+            MenuService.MainMenuCommandOptions cmdOpt;
+            menuService.AddMediaType("Movie");
+            menuService.AddMediaType("Show");
+            menuService.AddMediaType("Video");
+            ListMediaService listMedia = new ListMediaService(20);
+            CreateMediaRecordService createMediaRecord = new CreateMediaRecordService();
 
             log.Info("Initialization Complete");
             do
             {
-                cmdOpt = mainMenuService.Prompt(firstTime);
+                cmdOpt = menuService.Prompt(firstTime);
                 firstTime = false;
 
                 log.Info($"Menu Choice {cmdOpt}.");
                 switch (cmdOpt)
                 {
-                    case MainMenuService.MainMenuCommandOptions.Add:
-                        createMovie.CreateMovie(movieService);
-                        break;
-                    case MainMenuService.MainMenuCommandOptions.List:
-                        listMovies.ShowMovies(movieService);
-                        break;
-                    case MainMenuService.MainMenuCommandOptions.Save:
-                        movieService.SaveMovies(fName);
-                        break;
-                    case MainMenuService.MainMenuCommandOptions.Quit:
-                        if (movieService.NeedSave())
+                    case MenuService.MainMenuCommandOptions.Add:
+                        mediaType = menuService.PromtMediaType();
+
+                        if (mediaType.Equals("Movie"))
                         {
-                            if (!mainMenuService.PromptOkToCloseWithoutSave())
+                            createMediaRecord.CreateRecord<Movie>(movieService);
+                        }
+                        else if (mediaType.Equals("Show"))
+                        {
+                            createMediaRecord.CreateRecord<Show>(showService);
+
+                        }
+                        else if (mediaType.Equals("Video"))
+                        {
+                            createMediaRecord.CreateRecord<Video>(videoService);
+                        }
+                        break;
+                    case MenuService.MainMenuCommandOptions.List:
+                        mediaType = menuService.PromtMediaType();
+
+                        IMediaService mediaService = movieService;
+                        if (mediaType.Equals("Show"))
+                        {
+                            mediaService = showService;
+                        }
+                        else if (mediaType.Equals("Video"))
+                        {
+                            mediaService = videoService;
+                        }
+                        listMedia.ShowMedia(mediaService);
+                        break;
+                    case MenuService.MainMenuCommandOptions.Save:
+                        movieService.Save();
+                        showService.Save();
+                        videoService.Save();
+                        break;
+                    case MenuService.MainMenuCommandOptions.Quit:
+                        if (movieService.NeedSave() || showService.NeedSave() || videoService.NeedSave())
+                        {
+                            if (!menuService.PromptOkToCloseWithoutSave())
                             {
-                                cmdOpt = MainMenuService.MainMenuCommandOptions.Unset;
+                                cmdOpt = MenuService.MainMenuCommandOptions.Unset;
                             }
                         }
                         break;
                     default:
                         break;
                 }
-            } while (cmdOpt != MainMenuService.MainMenuCommandOptions.Quit);
+            } while (cmdOpt != MenuService.MainMenuCommandOptions.Quit);
 
             log.Info("Application Complete.");
         }

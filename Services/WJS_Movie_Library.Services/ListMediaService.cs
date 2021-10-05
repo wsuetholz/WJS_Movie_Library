@@ -7,7 +7,7 @@ using WJS_Movie_Library.Model;
 
 namespace WJS_Movie_Library.Services
 {
-    public class ListMoviesService
+    public class ListMediaService
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
 
@@ -18,30 +18,32 @@ namespace WJS_Movie_Library.Services
         public int StartPos { get; set; }
         public int PageHeight { get; set; }
 
-        public ListMoviesService(int pageHeight)
+        public ListMediaService(int pageHeight)
         {
             PageHeight = pageHeight;
             StartPos = 0;
         }
 
-        private int ShowMoviePage ( MovieService movieService )
+        private int ShowMediaPage ( IMediaService mediaService )
         {
             int lastIndex = 0;
-            IList<Movie> movies = movieService.GetRangeOfMovies(StartPos, PageHeight);
+            bool showHeader = true;
+            IList<MediaBase> mediaList = mediaService.GetRangeOfMedia(StartPos, PageHeight);
 
-            if (movies.Count <= 0)
+            if (mediaList.Count <= 0)
                 return lastIndex;
 
-            lastIndex = movies.Count + StartPos;
-            foreach (Movie movie in movies)
+            lastIndex = mediaList.Count + StartPos;
+            foreach (MediaBase record in mediaList)
             {
-                Console.WriteLine(movie.ToString());
+                record.Display(showHeader);
+                showHeader = false;
             }
             
             return lastIndex;
         }
 
-        public void ShowMovies ( MovieService movieService )
+        public void ShowMedia ( IMediaService mediaService )
         {
             bool quit = false;
             int lastIndex = -1;
@@ -50,7 +52,7 @@ namespace WJS_Movie_Library.Services
 
             do
             {
-                lastIndex = ShowMoviePage(movieService);
+                lastIndex = ShowMediaPage(mediaService);
                 if (lastIndex < PageHeight)
                 {
                     Console.WriteLine(_pagePromptLast);

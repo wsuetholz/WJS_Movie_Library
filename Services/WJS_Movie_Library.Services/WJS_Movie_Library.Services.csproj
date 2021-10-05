@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>WJS_Movie_Library.Services</AssemblyName>
-    <AssemblyVersion>1.0.0.22</AssemblyVersion>
-    <FileVersion>1.0.0.22</FileVersion>
+    <AssemblyVersion>1.0.0.38</AssemblyVersion>
+    <FileVersion>1.0.0.38</FileVersion>
   </PropertyGroup>
   
   <ItemGroup>
@@ -14,6 +14,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\..\Model\WJS_Movie_Library.Model\WJS_Movie_Library.Model.csproj" />
+    <ProjectReference Include="..\WJS_Movie_Library.Services.Interfaces\WJS_Movie_Library.Services.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
