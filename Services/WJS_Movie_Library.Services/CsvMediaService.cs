@@ -1,19 +1,17 @@
 using System.Globalization;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using CsvHelper;
 using WJS_Movie_Library.Model;
-using CsvHelper.Configuration;
-using WJS_Movie_Library.Model.Interfaces;
+using WJS_Movie_Library.Shared;
 
 namespace WJS_Movie_Library.Services
 {
     public class CsvMediaService<T> : IMediaService where T: MediaBase, new()
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+        private static string _extension = ".csv";
 
         private IList<MediaBase> _mediaList;
         private IList<MediaBase> _newMedia;
@@ -30,12 +28,12 @@ namespace WJS_Movie_Library.Services
 
         public CsvMediaService(string fname)
         {
-            _fName = fname;
+            _fName = BuildDataFileName.BuildDataFilePath(fname, _extension);
 
-            if (File.Exists(fname))
+            if (File.Exists(_fName))
             {
                 _newFile = false;
-                _mediaList = this.LoadFromCSV(fname);
+                _mediaList = this.LoadFromCSV(_fName);
             }
             else
             {

@@ -12,14 +12,14 @@ namespace WJS_Movie_Library
 
         static void Main(string[] args)
         {
-            String movieFName = "../../../../Data/movies.csv";
-            String showFName = "../../../../Data/shows.csv";
-            String videoFName = "../../../../Data/videos.csv";
+            String movieFName = "movies";
+            String showFName = "shows";
+            String videoFName = "videos";
 
             string mediaType = "";
             bool firstTime = true;
 
-            log.Info($"Startup using data file {movieFName}.");
+            log.Info($"Startup using data files {movieFName}, {showFName}, {videoFName}.");
 
             CsvMediaService<Movie> movieService = new CsvMediaService<Movie>(movieFName);
             CsvMediaService<Show> showService = new CsvMediaService<Show>(showFName);

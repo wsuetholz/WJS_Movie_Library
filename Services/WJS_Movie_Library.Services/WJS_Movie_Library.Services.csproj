@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>WJS_Movie_Library.Services</AssemblyName>
-    <AssemblyVersion>1.0.0.38</AssemblyVersion>
-    <FileVersion>1.0.0.38</FileVersion>
+    <AssemblyVersion>1.0.0.43</AssemblyVersion>
+    <FileVersion>1.0.0.43</FileVersion>
   </PropertyGroup>
   
   <ItemGroup>
