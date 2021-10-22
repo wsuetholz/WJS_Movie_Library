@@ -22,7 +22,7 @@ namespace WJS_Movie_Library.Services
 
         }
 
-        public UInt64 CreateRecord<T>( CsvMediaService<T> mediaService ) where T: MediaBase, new()
+        public UInt64 CreateRecord<T>( IMediaService mediaService ) where T: MediaBase, new()
         {
             T newRecord = new();
 

@@ -1,24 +1,24 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using CsvHelper;
 using WJS_Movie_Library.Model;
 using WJS_Movie_Library.Shared;
+using Newtonsoft.Json;
 
 namespace WJS_Movie_Library.Services
 {
-    public class CsvMediaService<T> : IMediaService where T: MediaBase, new()
+    public class JsonMediaService<T> : IMediaService where T : MediaBase, new()
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
-        private static string _extension = ".csv";
+        private static string _extension = ".json";
 
         private IList<MediaBase> _mediaList;
         private IList<MediaBase> _newMedia;
         private bool _newFile = false;
         private string _fName;
 
-        public CsvMediaService()
+        public JsonMediaService()
         {
             _mediaList = new List<MediaBase>();
             _newMedia = new List<MediaBase>();
@@ -26,14 +26,14 @@ namespace WJS_Movie_Library.Services
             _fName = "";
         }
 
-        public CsvMediaService(string fname)
+        public JsonMediaService(string fname)
         {
             _fName = BuildDataFileName.BuildDataFilePath(fname, _extension);
 
             if (File.Exists(_fName))
             {
                 _newFile = false;
-                _mediaList = this.LoadFromCSV(_fName);
+                _mediaList = this.LoadFromJSON(_fName);
             }
             else
             {
@@ -43,21 +43,23 @@ namespace WJS_Movie_Library.Services
             _newMedia = new List<MediaBase>();
         }
 
-        public IList<MediaBase> LoadFromCSV(string fname)
+        public IList<MediaBase> LoadFromJSON(string fname)
         {
             IList<MediaBase> mediaList = new List<MediaBase>();
-            T record = new();
 
-            using (var reader = new StreamReader(fname))
+            using (var sr = new StreamReader(fname))
             {
+                var serializer = new JsonSerializer();
                 try
                 {
-                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    using (var reader = new JsonTextReader(sr))
                     {
-                        record.RegisterCSVMap(csv.Context);     // Should really be a static function.....
-
-                        var records = csv.GetRecords<T>();
-                        mediaList = new List<MediaBase>(records);
+                        T record;
+                        do
+                        {
+                            record = serializer.Deserialize<T>(reader);
+                            mediaList.Add(record);
+                        } while (record != null);
                     }
                 }
                 catch (Exception ex)
@@ -107,71 +109,21 @@ namespace WJS_Movie_Library.Services
         {
             if (NeedSave())
             {
-                T rec;
-                if (_newMedia.Count > 0)
-                {
-                    rec = (T)_newMedia[0];
-                }
-                else
-                {
-                    rec = new();
-                }
-                using (var sw = new StreamWriter(_fName, true))
-                {
-                    using (CsvWriter cw = new CsvWriter(sw, CultureInfo.InvariantCulture))
-                    {
-                        rec.RegisterCSVMap(cw.Context);     // Should really be a static function.....
-
-                        if (_newFile)
-                        {
-                            cw.WriteHeader<T>();
-                            cw.NextRecord();
-                        }
-
-                        // !!TODO!! Should check if last line in file is a record or a blank line..  If it's a record should do a NextRecord() otherwise will append to that record..
-
-                        foreach (T record in _newMedia)
-                        {
-                            cw.WriteRecord<T>(record);
-                            cw.NextRecord();
-                        }
-                    }
-                }
+                Save(_mediaList);
             }
         }
 
         public void Save(IList<MediaBase> mediaList)
         {
-            if (NeedSave())
+            JsonSerializer serializer = JsonSerializer.Create();
+
+            using (var sw = new StreamWriter(_fName, false))
             {
-                T rec;
-                if (_newMedia.Count > 0)
+                using (JsonTextWriter jw = new JsonTextWriter(sw))
                 {
-                    rec = (T)_newMedia[0];
-                }
-                else
-                {
-                    rec = new();
-                }
-                using (var sw = new StreamWriter(_fName, true))
-                {
-                    using (CsvWriter cw = new CsvWriter(sw, CultureInfo.InvariantCulture))
+                    foreach (T record in mediaList)
                     {
-                        rec.RegisterCSVMap(cw.Context);     // Should really be a static function.....
-
-                        if (_newFile)
-                        {
-                            cw.WriteHeader<T>();
-                            cw.NextRecord();
-                        }
-
-                        // !!TODO!! Should check if last line in file is a record or a blank line..  If it's a record should do a NextRecord() otherwise will append to that record..
-
-                        foreach (T record in _newMedia)
-                        {
-                            cw.WriteRecord<T>(record);
-                            cw.NextRecord();
-                        }
+                        serializer.Serialize(jw, record);
                     }
                 }
             }
@@ -206,5 +158,6 @@ namespace WJS_Movie_Library.Services
             }
             return result;
         }
+
     }
 }

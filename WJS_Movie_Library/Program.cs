@@ -21,9 +21,13 @@ namespace WJS_Movie_Library
 
             log.Info($"Startup using data files {movieFName}, {showFName}, {videoFName}.");
 
-            CsvMediaService<Movie> movieService = new CsvMediaService<Movie>(movieFName);
-            CsvMediaService<Show> showService = new CsvMediaService<Show>(showFName);
-            CsvMediaService<Video> videoService = new CsvMediaService<Video>(videoFName);
+            //CsvMediaService<Movie> movieService = new CsvMediaService<Movie>(movieFName);
+            //CsvMediaService<Show> showService = new CsvMediaService<Show>(showFName);
+            //CsvMediaService<Video> videoService = new CsvMediaService<Video>(videoFName);
+            JsonMediaService<Movie> movieService = new JsonMediaService<Movie>(movieFName);
+            JsonMediaService<Show> showService = new JsonMediaService<Show>(showFName);
+            JsonMediaService<Video> videoService = new JsonMediaService<Video>(videoFName);
+
             MenuService menuService = new MenuService();
             MenuService.MainMenuCommandOptions cmdOpt;
             menuService.AddMediaType("Movie");
