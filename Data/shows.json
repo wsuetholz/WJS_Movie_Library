@@ -1,0 +1,38 @@
+{
+  "MediaList": [
+    {
+      "MediaTypeName": "Show",
+      "Season": 1,
+      "Episode": 10,
+      "Writers": [
+        "Joe Blow",
+        "Bob Redneck"
+      ],
+      "Id": 1,
+      "Title": "The Dukes of Hazzard (1982)"
+    },
+    {
+      "MediaTypeName": "Show",
+      "Season": 1,
+      "Episode": 3,
+      "Writers": [
+        "You",
+        "Me",
+        "Everyone"
+      ],
+      "Id": 2,
+      "Title": "A Show (1111)"
+    },
+    {
+      "MediaTypeName": "Show",
+      "Season": 1,
+      "Episode": 5,
+      "Writers": [
+        "Me",
+        "Not Me"
+      ],
+      "Id": 3,
+      "Title": "Dukes of Hazzard (1980)"
+    }
+  ]
+}

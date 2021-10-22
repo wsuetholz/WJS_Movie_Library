@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using WJS_Movie_Library.Model;
 using WJS_Movie_Library.Shared;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace WJS_Movie_Library.Services
 {
@@ -17,6 +17,31 @@ namespace WJS_Movie_Library.Services
         private IList<MediaBase> _newMedia;
         private bool _newFile = false;
         private string _fName;
+
+        public class Media
+        {
+            public List<T> MediaList { get; set; }
+
+            public Media(IList<MediaBase>mediaList)
+            {
+                List<T> mList = new List<T>();
+                foreach (MediaBase record in mediaList)
+                {
+                    mList.Add((T)record);
+                }
+                MediaList = mList;
+            }
+
+            public Media(List<T> mediaList)
+            {
+                MediaList = mediaList;
+            }
+
+            public Media()
+            {
+                MediaList = new List<T>();
+            }
+        }
 
         public JsonMediaService()
         {
@@ -49,17 +74,15 @@ namespace WJS_Movie_Library.Services
 
             using (var sr = new StreamReader(fname))
             {
-                var serializer = new JsonSerializer();
                 try
                 {
-                    using (var reader = new JsonTextReader(sr))
+                    var data = sr.ReadToEnd();
+                    Media media;
+                    media = JsonSerializer.Deserialize<Media>(data);
+
+                    foreach (T record in media.MediaList)
                     {
-                        T record;
-                        do
-                        {
-                            record = serializer.Deserialize<T>(reader);
-                            mediaList.Add(record);
-                        } while (record != null);
+                        mediaList.Add((MediaBase)record);
                     }
                 }
                 catch (Exception ex)
@@ -115,17 +138,13 @@ namespace WJS_Movie_Library.Services
 
         public void Save(IList<MediaBase> mediaList)
         {
-            JsonSerializer serializer = JsonSerializer.Create();
-
             using (var sw = new StreamWriter(_fName, false))
             {
-                using (JsonTextWriter jw = new JsonTextWriter(sw))
-                {
-                    foreach (T record in mediaList)
-                    {
-                        serializer.Serialize(jw, record);
-                    }
-                }
+                Media media = new Media(mediaList);
+                var options = new JsonSerializerOptions { WriteIndented = true };
+
+                var data = JsonSerializer.Serialize<Media>(media, options);
+                sw.WriteLine(data);
             }
         }
 

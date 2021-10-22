@@ -24,6 +24,9 @@ namespace WJS_Movie_Library
             //CsvMediaService<Movie> movieService = new CsvMediaService<Movie>(movieFName);
             //CsvMediaService<Show> showService = new CsvMediaService<Show>(showFName);
             //CsvMediaService<Video> videoService = new CsvMediaService<Video>(videoFName);
+            //JsonMediaService<Movie> movieServiceJ = new JsonMediaService<Movie>(movieFName);
+            //JsonMediaService<Show> showServiceJ = new JsonMediaService<Show>(showFName);
+            //JsonMediaService<Video> videoServiceJ = new JsonMediaService<Video>(videoFName);
             JsonMediaService<Movie> movieService = new JsonMediaService<Movie>(movieFName);
             JsonMediaService<Show> showService = new JsonMediaService<Show>(showFName);
             JsonMediaService<Video> videoService = new JsonMediaService<Video>(videoFName);
@@ -78,8 +81,11 @@ namespace WJS_Movie_Library
                         break;
                     case MenuService.MainMenuCommandOptions.Save:
                         movieService.Save();
+                        //movieServiceJ.Save(movieService.GetMediaList());
                         showService.Save();
+                        //showServiceJ.Save(showService.GetMediaList());
                         videoService.Save();
+                        //videoServiceJ.Save(videoService.GetMediaList());
                         break;
                     case MenuService.MainMenuCommandOptions.Quit:
                         if (movieService.NeedSave() || showService.NeedSave() || videoService.NeedSave())
