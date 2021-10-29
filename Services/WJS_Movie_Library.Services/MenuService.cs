@@ -11,16 +11,31 @@ namespace WJS_Movie_Library.Services
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
 
         private string _mainTitle = "My Media Library";
-        private string _mainCommandOptions = "Please Select Command (A)dd, (L)ist, (S)ave, (Q)uit";
+        private string _mainCommandOptions = "Please Select Command (A)dd, (F)ind, (L)ist, (S)ave, (Q)uit";
         private string _savePrompt = "Media Data Has Changed\n\nDo you really want to quit?  (Y)es or (N)o:";
 
-        public enum MainMenuCommandOptions { Unset, Add, List, Save, Quit };
+        public enum MainMenuCommandOptions { Unset, Add, Find, List, Save, Quit };
 
         public IList<string> MediaTypes { get; set; }
 
         public MenuService()
         {
             MediaTypes = new List<string>();
+        }
+
+        public string PromptPartialTitle()
+        {
+            string ret;
+
+            ret = "";
+
+            do
+            {
+                Console.WriteLine("Enter Partial Title Name you wish to Match:");
+                ret = Console.ReadLine();
+            } while (ret.Length < 1);
+
+            return ret;
         }
 
         public void AddMediaType(string newType)
@@ -101,6 +116,11 @@ namespace WJS_Movie_Library.Services
                     if (respCh.Equals("A"))
                     {
                         ret = MainMenuCommandOptions.Add;
+                        commandSet = true;
+                    }
+                    else if (respCh.Equals("F"))
+                    {
+                        ret = MainMenuCommandOptions.Find;
                         commandSet = true;
                     }
                     else if (respCh.Equals("L"))

@@ -24,11 +24,21 @@ namespace WJS_Movie_Library.Services
             StartPos = 0;
         }
 
-        private int ShowMediaPage ( IMediaService mediaService )
+        private int ShowMediaPage ( IMediaService mediaService, bool showCount )
         {
             int lastIndex = 0;
             bool showHeader = true;
             IList<MediaBase> mediaList = mediaService.GetRangeOfMedia(StartPos, PageHeight);
+            int totalRecords = 0;
+            bool showType = false;
+
+            if (showCount)
+            {
+                totalRecords = mediaService.GetMediaList().Count;
+                Console.WriteLine($"Total Records: {totalRecords}");
+                Console.WriteLine();
+                showType = true;
+            }
 
             if (mediaList.Count <= 0)
                 return lastIndex;
@@ -36,14 +46,14 @@ namespace WJS_Movie_Library.Services
             lastIndex = mediaList.Count + StartPos;
             foreach (MediaBase record in mediaList)
             {
-                record.Display(showHeader);
+                record.Display(showHeader, showType);
                 showHeader = false;
             }
             
             return lastIndex;
         }
 
-        public void ShowMedia ( IMediaService mediaService )
+        public void ShowMedia ( IMediaService mediaService, bool showCount = false )
         {
             bool quit = false;
             int lastIndex = -1;
@@ -52,7 +62,7 @@ namespace WJS_Movie_Library.Services
 
             do
             {
-                lastIndex = ShowMediaPage(mediaService);
+                lastIndex = ShowMediaPage(mediaService, showCount);
                 if (lastIndex < PageHeight)
                 {
                     Console.WriteLine(_pagePromptLast);

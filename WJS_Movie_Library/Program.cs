@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using CsvHelper;
 using WJS_Movie_Library.Model;
 using WJS_Movie_Library.Services;
+using System.Linq;
+
 
 namespace WJS_Movie_Library
 {
@@ -65,6 +67,19 @@ namespace WJS_Movie_Library
                             createMediaRecord.CreateRecord<Video>(videoService);
                         }
                         break;
+
+                    case MenuService.MainMenuCommandOptions.Find:
+                        string searchFor = menuService.PromptPartialTitle();
+                        IList<MediaBase> results = new List<MediaBase>();
+
+                        var subResults = movieService.GetMediaList().Where(m => m.Title.Contains(searchFor, StringComparison.CurrentCultureIgnoreCase));
+                        subResults = subResults.Concat(showService.GetMediaList().Where(m => m.Title.Contains(searchFor, StringComparison.CurrentCultureIgnoreCase)));
+                        subResults = subResults.Concat(videoService.GetMediaList().Where(m => m.Title.Contains(searchFor, StringComparison.CurrentCultureIgnoreCase)));
+
+                        TempMediaService tempService = new TempMediaService(subResults.ToList());
+                        listMedia.ShowMedia(tempService, true);
+                        break;
+
                     case MenuService.MainMenuCommandOptions.List:
                         mediaType = menuService.PromtMediaType();
 

@@ -24,6 +24,7 @@ namespace WJS_Movie_Library.Model
         public override string MediaTypeName { get => _mediaTypeName; }
 
         private string _pageHeader = "Video List:\nVideo Id   Title    Format    Length    Regions";
+        private string _pageHeaderType = "Video List:\nMedia Type     Video Id   Title    Format    Length    Regions";
         private string _formatEntry = "Video Format: ";
         private string _lengthEntry = "Video Length: ";
         private string _regionTitle = "Enter the Regions for New Video.  Press Enter on a Blank line to finish.";
@@ -117,12 +118,18 @@ namespace WJS_Movie_Library.Model
             return retStr;
         }
 
-        public override void Display(bool showHeader)
+        public override void Display(bool showHeader, bool showType = false)
         {
             if (showHeader)
-                Console.WriteLine(this._pageHeader);
+                if (showType)
+                    Console.WriteLine(this._pageHeaderType);
+                else
+                    Console.WriteLine(this._pageHeader);
 
-            Console.WriteLine(this.ToString());
+            if (showType)
+                Console.WriteLine($"{_mediaTypeName}\t{this.ToString()}");
+            else
+                Console.WriteLine(this.ToString());
         }
 
         public override void RegisterCSVMap(CsvContext context)

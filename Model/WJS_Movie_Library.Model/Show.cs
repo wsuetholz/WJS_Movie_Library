@@ -24,6 +24,7 @@ namespace WJS_Movie_Library.Model
         public override string MediaTypeName { get => _mediaTypeName; }
 
         private string _pageHeader = "Show List:\nShow Id   Title   Season   Episode    Writers";
+        private string _pageHeaderType = "Show List:\nMedia Type     Show Id   Title   Season   Episode    Writers";
         private string _seasonEntry = "Season Number: ";
         private string _episodeEntry = "Episode Number: ";
         private string _writerTitle = "Enter a Writers for New Show.  Press Enter on a Blank line to finish.";
@@ -121,12 +122,18 @@ namespace WJS_Movie_Library.Model
             return retStr;
         }
 
-        public override void Display(bool showHeader)
+        public override void Display(bool showHeader, bool showType = false)
         {
             if (showHeader)
-                Console.WriteLine(this._pageHeader);
+                if (showType)
+                    Console.WriteLine(this._pageHeaderType);
+                else
+                    Console.WriteLine(this._pageHeader);
 
-            Console.WriteLine(this.ToString());
+            if (showType)
+                Console.WriteLine($"{_mediaTypeName}\t{this.ToString()}");
+            else
+                Console.WriteLine(this.ToString());
         }
 
         public override void RegisterCSVMap(CsvContext context)

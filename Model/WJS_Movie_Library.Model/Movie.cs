@@ -23,6 +23,7 @@ namespace WJS_Movie_Library.Model
         public override string MediaTypeName { get => _mediaTypeName; }
 
         private string _pageHeader = "Movie List:\nMovie Id   Title       Genres";
+        private string _pageHeaderType = "Movie List:\nMedia Type     Movie Id   Title       Genres";
         private string _genreTitle = "Enter a Genre for New Movie.  Press Enter on a Blank line to finish.";
         private string _movieGenre = "Movie Genre: ";
 
@@ -109,12 +110,18 @@ namespace WJS_Movie_Library.Model
             return retStr;
         }
 
-        public override void Display(bool showHeader)
+        public override void Display(bool showHeader, bool showType = false)
         {
             if (showHeader)
-                Console.WriteLine(this._pageHeader);
+                if (showType)
+                    Console.WriteLine(this._pageHeaderType);
+                else
+                    Console.WriteLine(this._pageHeader);
 
-            Console.WriteLine(this.ToString());
+            if (showType)
+                Console.WriteLine($"{_mediaTypeName}\t{this.ToString()}");
+            else
+                Console.WriteLine(this.ToString());
         }
 
         public override void RegisterCSVMap(CsvContext context)

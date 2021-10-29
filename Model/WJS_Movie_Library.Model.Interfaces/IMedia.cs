@@ -9,7 +9,7 @@ namespace WJS_Movie_Library.Model.Interfaces
         string MediaTypeName { get; }
 
         void RegisterCSVMap(CsvContext context);
-        void Display(bool showHeader);
+        void Display(bool showHeader, bool showType = false);
         bool EnterCustomField(bool first);
     }
 }

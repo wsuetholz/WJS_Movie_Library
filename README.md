@@ -67,4 +67,32 @@ A6 - Class 06 Assignment
 
 	* example: media.Display();
 
-	 
+
+A7 - Class 07 Assignment
+
+	Modify your existing Movie Library program to support the use of another "repository" implemented via Interfaces.  
+	Specifically we currently support a file based "repository", meaning all data is read from and written to a file.
+
+	Your updated program should be modified to include a JSON repository where the data is stored and written in the JSON format.
+	Using interfaces as discussed in class, this should require minimal changes to your actual code outside of modifications to 
+	support the interface.
+
+	Functionally your program will work as it has in the past to read and write movie data, but the file used will be the movies.json file.
+
+	Note: Use the JSON.NET library as demonstrated in class to make your life much easier.
+
+
+A9 - Class 09 Assignment
+	Only an extension to your existing application - Do Not Create a Database
+
+	Add search to the Movie application across all "Movie" types
+
+		User should be able to perform a search based on title
+			Using LINQ - create a substring search, case insensitive
+
+		The search results should display the results and the number of matches
+
+		One single search should return results from all media types
+
+		Extra credit: Identify the type of movie (show, video, movie)
+
