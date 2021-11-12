@@ -11,12 +11,15 @@ namespace WJS_Movie_Library.Shared
             string dataDir = "Data";
             string baseName = Path.GetFileNameWithoutExtension(fName);
             var currDir = Directory.GetParent(Directory.GetCurrentDirectory());
-            while (!Directory.Exists(Path.Combine(currDir.FullName, dataDir)))
+            while (currDir != null && !Directory.Exists(Path.Combine(currDir.FullName, dataDir)))
             {
                 currDir = currDir.Parent;
             }
 
-            fPath = Path.Combine(currDir.FullName, dataDir, baseName) + myExtension;
+            if (currDir == null)
+                fPath = Path.Combine(dataDir, baseName) + myExtension;
+            else
+                fPath = Path.Combine(currDir.FullName, dataDir, baseName) + myExtension;
 
             return fPath;
         }
