@@ -1,6 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
+// git clone <something> <new dir name>
 namespace WJS_Movie_Library.Shared
 {
     public class BuildDataFileName
@@ -8,19 +8,15 @@ namespace WJS_Movie_Library.Shared
         public static string BuildDataFilePath(string fName, string myExtension)
         {
             string fPath = "";
-            string appBaseDirectory = "WJS_Movie_Library";  // Project Base Directory
-
-            //string dataPath = $"{AppContext.BaseDirectory}..\\..\\..\\Data\\";
+            string dataDir = "Data";
             string baseName = Path.GetFileNameWithoutExtension(fName);
-
-            foreach (string part in AppContext.BaseDirectory.Split("\\"))
+            var currDir = Directory.GetParent(Directory.GetCurrentDirectory());
+            while (!Directory.Exists(Path.Combine(currDir.FullName, dataDir)))
             {
-                fPath = fPath + part + Path.DirectorySeparatorChar;
-                if (part.Equals(appBaseDirectory))
-                    break;
+                currDir = currDir.Parent;
             }
 
-            fPath = fPath + "Data" + Path.DirectorySeparatorChar + baseName + myExtension;
+            fPath = Path.Combine(currDir.FullName, dataDir, baseName) + myExtension;
 
             return fPath;
         }
