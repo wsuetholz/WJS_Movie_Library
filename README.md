@@ -96,3 +96,23 @@ A9 - Class 09 Assignment
 
 		Extra credit: Identify the type of movie (show, video, movie)
 
+
+A11 - Class 11 Assignment -- Convert application to use database
+		
+	Your existing Movie application has used a variety of methods for data storage included user entry and files.  
+	It is now time to convert this to use a database.  
+
+	As demonstrated in class, create the movielens database and modify your application to use the subsequent 
+	tables created in your bitsql.wctc.edu database.
+
+	Provided your application has been refactored well enough to this point, it should not require a complete 
+	rewrite of your application.  
+
+	At a minimum, your application should provide the following operations.
+
+		Search Movie
+		Add Movie
+		Update Movie
+		Delete Movie
+
+	Note: Please submit your database details in the text box and your git url in the url entry.

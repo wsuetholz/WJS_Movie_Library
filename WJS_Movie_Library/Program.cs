@@ -29,19 +29,20 @@ namespace WJS_Movie_Library
             //JsonMediaService<Movie> movieServiceJ = new JsonMediaService<Movie>(movieFName);
             //JsonMediaService<Show> showServiceJ = new JsonMediaService<Show>(showFName);
             //JsonMediaService<Video> videoServiceJ = new JsonMediaService<Video>(videoFName);
-            JsonMediaService<Movie> movieService = new JsonMediaService<Movie>(movieFName);
-            JsonMediaService<Show> showService = new JsonMediaService<Show>(showFName);
-            JsonMediaService<Video> videoService = new JsonMediaService<Video>(videoFName);
+            //JsonMediaService<Movie> movieService = new JsonMediaService<Movie>(movieFName);
+            //JsonMediaService<Show> showService = new JsonMediaService<Show>(showFName);
+            //JsonMediaService<Video> videoService = new JsonMediaService<Video>(videoFName);
 
             MenuService menuService = new MenuService();
             MenuService.MainMenuCommandOptions cmdOpt;
             menuService.AddMediaType("Movie");
-            menuService.AddMediaType("Show");
-            menuService.AddMediaType("Video");
+            //menuService.AddMediaType("Show");
+            //menuService.AddMediaType("Video");
             ListMediaService listMedia = new ListMediaService(20);
             CreateMediaRecordService createMediaRecord = new CreateMediaRecordService();
 
             log.Info("Initialization Complete");
+            /*
             do
             {
                 cmdOpt = menuService.Prompt(firstTime);
@@ -51,21 +52,21 @@ namespace WJS_Movie_Library
                 switch (cmdOpt)
                 {
                     case MenuService.MainMenuCommandOptions.Add:
-                        mediaType = menuService.PromtMediaType();
+                        //mediaType = menuService.PromtMediaType();
 
-                        if (mediaType.Equals("Movie"))
+                        //if (mediaType.Equals("Movie"))
                         {
                             createMediaRecord.CreateRecord<Movie>(movieService);
                         }
-                        else if (mediaType.Equals("Show"))
-                        {
-                            createMediaRecord.CreateRecord<Show>(showService);
-
-                        }
-                        else if (mediaType.Equals("Video"))
-                        {
-                            createMediaRecord.CreateRecord<Video>(videoService);
-                        }
+                        //else if (mediaType.Equals("Show"))
+                        //{
+                        //    createMediaRecord.CreateRecord<Show>(showService);
+                        //
+                        //}
+                        //else if (mediaType.Equals("Video"))
+                        //{
+                        //    createMediaRecord.CreateRecord<Video>(videoService);
+                        //}
                         break;
 
                     case MenuService.MainMenuCommandOptions.Find:
@@ -115,7 +116,7 @@ namespace WJS_Movie_Library
                         break;
                 }
             } while (cmdOpt != MenuService.MainMenuCommandOptions.Quit);
-
+            */
             log.Info("Application Complete.");
         }
 

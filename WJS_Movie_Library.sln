@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WJS_Movie_Library", "WJS_Movie_Library\WJS_Movie_Library.csproj", "{ECE9D34A-6B5C-4BE0-8F0F-CDFD85F51F4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WJS_Movie_Library", "WJS_Movie_Library.csproj", "{ECE9D34A-6B5C-4BE0-8F0F-CDFD85F51F4D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{619E7C1E-68A1-4A66-8942-ED3D1540DC85} = {619E7C1E-68A1-4A66-8942-ED3D1540DC85}
 		{07DB89A6-56CE-4390-AE6F-41F750185C19} = {07DB89A6-56CE-4390-AE6F-41F750185C19}
@@ -21,9 +21,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WJS_Movie_Library.Services"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9C329B5A-017B-49A4-8585-EA9141F5040A}"
 	ProjectSection(SolutionItems) = preProject
+		appsettings.json = appsettings.json
+		appsettings.json.txt = appsettings.json.txt
 		LICENSE = LICENSE
 		Data\movies.csv = Data\movies.csv
 		NLog.config = NLog.config
+		NLog.xsd = NLog.xsd
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -38,11 +41,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{89FD94E8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{07572C2E-D14C-4D2B-9DDF-8638DAF87CFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WJS_Movie_Library.Model.Interfaces", "Model\WJS_Movie_Library.Model.Interfaces\WJS_Movie_Library.Model.Interfaces.csproj", "{4FDB6E40-37D6-4916-9183-665FE7E5126A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WJS_Movie_Library.Model.Interfaces", "Model\WJS_Movie_Library.Model.Interfaces\WJS_Movie_Library.Model.Interfaces.csproj", "{4FDB6E40-37D6-4916-9183-665FE7E5126A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WJS_Movie_Library.Services.Interfaces", "Services\WJS_Movie_Library.Services.Interfaces\WJS_Movie_Library.Services.Interfaces.csproj", "{70E3598D-8DE5-43C3-B712-0E80800F42F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WJS_Movie_Library.Services.Interfaces", "Services\WJS_Movie_Library.Services.Interfaces\WJS_Movie_Library.Services.Interfaces.csproj", "{70E3598D-8DE5-43C3-B712-0E80800F42F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WJS_Movie_Library.Shared", "WJS_Movie_Library.Shared\WJS_Movie_Library.Shared.csproj", "{15CC6A37-D3C0-44A9-B88F-8D507C96AECD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WJS_Movie_Library.Shared", "WJS_Movie_Library.Shared\WJS_Movie_Library.Shared.csproj", "{15CC6A37-D3C0-44A9-B88F-8D507C96AECD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
